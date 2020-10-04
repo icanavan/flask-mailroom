@@ -22,8 +22,8 @@ def create():
 
     if request.method == 'POST':
         donor = Donor.select().where(Donor.name == request.form['name']).get()
-        donor.save()
-        donation = Donation(value=request.form['donation-amount'], donor=request.form['name'])
+        # donor.save()  # No need to save the donor: if you're able to retrieve them from the database that means they're already saved.
+        donation = Donation(value=request.form['donation-amount'], donor=donor)  # After retrieving the donor in the previous line, you can provide them to the `Donation` constructor like so.
         donation.save()
         return redirect(url_for('donations'))
     else:
